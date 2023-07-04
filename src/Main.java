@@ -16,6 +16,9 @@ else:
     }
         result = switcher.get(True, '!')
 
-        print("Result:", result)
+        print("Result:", result);
+
     }
+    System.out.print("Example");
+
 }
