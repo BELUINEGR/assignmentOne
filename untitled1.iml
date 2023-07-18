@@ -1,20 +1,64 @@
-public class Main {
-    // 5 4 3 2 1
-    public static int printNumber(int n) {
-        System.out.printl(n);
-        printNumber(n)
+public class MyArrayList<E> implements MyList<E> {
+    private Object[] elements;
+    private int size;
+    
+    public MyArrayList() {
+        elements = new Object[10]; // initial capacity of 10
+        size = 0;
     }
-
-number = int(input("Enter a number: "))
-
-result = ''
-if number % 3 == 0 and number % 5 == 0:
-    result = '+'
-else:
-    switcher = {
-        number % 3 == 0: '-',
-        number % 5 == 0: '-',
+    
+    @Override
+    public void add(E element) {
+        if (size == elements.length) {
+            // create new array with double the size
+            Object[] newArray = new Object[elements.length * 2];
+            // copy over the elements
+            System.arraycopy(elements, 0, newArray, 0, size);
+            elements = newArray;
+        }
+        elements[size] = element;
+        size++;
     }
-    result = switcher.get(True, '!')
-
-print("Result:", result)
+    
+    @Override
+    public E get(int index) {
+        if (index < 0 || index >= size) {
+            throw new IndexOutOfBoundsException();
+        }
+        return (E) elements[index];
+    }
+    
+    @Override
+    public void remove(int index) {
+        if (index < 0 || index >= size) {
+            throw new IndexOutOfBoundsException();
+        }
+        // shift elements to the left
+        for (int i = index; i < size - 1; i++) {
+            elements[i] = elements[i + 1];
+        }
+        elements[size - 1] = null; // clear the last element
+        size--;
+    }
+    
+    @Override
+    public int size() {
+        return size;
+    }
+    
+    // Implement any other methods specified by the List interface
+    
+    // Test all methods of MyArrayList
+    public static void main(String[] args) {
+        MyList<Integer> myList = new MyArrayList<>();
+        myList.add(10);
+        myList.add(20);
+        myList.add(30);
+        
+        System.out.println(myList.get(1)); // Output: 20
+        
+        myList.remove(0);
+        
+        System.out.println(myList.size()); // Output: 2
+    }
+}
